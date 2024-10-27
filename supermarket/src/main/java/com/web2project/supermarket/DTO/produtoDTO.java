@@ -5,7 +5,7 @@ import java.time.Instant;
 import com.web2project.supermarket.entities.enums.Genero;
 
 public record produtoDTO( 
-        String nome,
+        String nomeProduto,
         String marca,
         Instant dataFabricacao,
         Instant dataValidade,

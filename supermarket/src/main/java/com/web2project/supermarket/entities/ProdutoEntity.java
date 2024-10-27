@@ -3,6 +3,7 @@ package com.web2project.supermarket.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
+import com.web2project.supermarket.DTO.produtoDTO;
 import com.web2project.supermarket.entities.enums.Genero;
 
 import jakarta.persistence.Entity;
@@ -10,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 @Getter
 @Setter
-@AllArgsConstructor // conflita com @NoArgsConstructor
+//@AllArgsConstructor causava erro quando dava o getAll, usei manualmente
 @Entity
 @Table(name = "produtos")
 public class ProdutoEntity implements Serializable{ 
@@ -35,5 +35,19 @@ public class ProdutoEntity implements Serializable{
     private Genero genero;
     private String lote;
 
+    public ProdutoEntity(produtoDTO produto) {
+        this.nomeProduto = produto.nomeProduto();
+        this.marca = produto.marca();
+        this.dataFabricacao = produto.dataFabricacao();
+        this.dataValidade = produto.dataValidade();
+        this.genero = produto.genero();
+        this.lote = produto.lote();
+        
+    }
+
+    public ProdutoEntity() {
+    }
+
+    
 
 }
