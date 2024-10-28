@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 
 import com.web2project.supermarket.DTO.clienteDTO;
+import com.web2project.supermarket.entities.enums.GeneroPessoa;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class ClienteEntity implements Serializable{
     private Long id;
     private String nome;
     private String cpf;
-    private String genero;
+    private GeneroPessoa genero;
     private Instant dataNascimento;
 
     public ClienteEntity(clienteDTO cliente) {

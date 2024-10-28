@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 
 import com.web2project.supermarket.DTO.produtoDTO;
-import com.web2project.supermarket.entities.enums.Genero;
+import com.web2project.supermarket.entities.enums.GeneroProduto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +32,7 @@ public class ProdutoEntity implements Serializable{
     private String marca;
     private Instant dataFabricacao;
     private Instant dataValidade;
-    private Genero genero;
+    private GeneroProduto genero;
     private String lote;
 
     public ProdutoEntity(produtoDTO produto) {

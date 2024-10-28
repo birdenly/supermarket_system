@@ -1,6 +1,6 @@
 package com.web2project.supermarket.entities.enums;
 
-public enum Genero {
+public enum GeneroProduto {
     COSMETICO,
     ALIMENTICIO,
     HIGIENE_PESSOAL,
