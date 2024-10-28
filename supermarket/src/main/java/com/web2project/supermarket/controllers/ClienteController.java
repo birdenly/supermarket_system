@@ -59,6 +59,7 @@ public class ClienteController {
 
         ClienteEntity Cliente = new ClienteEntity(obj);
 
+
         Cliente = service.update(id, Cliente);
         return ResponseEntity.ok().body(Cliente);
     }

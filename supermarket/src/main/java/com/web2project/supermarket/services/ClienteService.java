@@ -1,8 +1,14 @@
 package com.web2project.supermarket.services;
 
+import java.beans.PropertyDescriptor;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,15 +39,25 @@ public class ClienteService {
     }
 
     public ClienteEntity update(Long id, ClienteEntity obj){
-            ClienteEntity entity = repository.getReferenceById(id);
-            updateData(entity,obj);
-            return repository.save(entity);
+        ClienteEntity entity = repository.getReferenceById(id);
+        BeanUtils.copyProperties(obj, entity, getNullPropertyNames(obj, "id"));
+        return repository.save(entity);
     }
 
-    private void updateData(ClienteEntity entity, ClienteEntity obj) {
-        entity.setNome(obj.getNome());
-        entity.setCpf(obj.getCpf());
-        entity.setGenero(obj.getGenero());
-        entity.setDataNascimento(obj.getDataNascimento());
+    public static String[] getNullPropertyNames(Object source, String... ignoreProperties) {
+        final BeanWrapper src = new BeanWrapperImpl(source);
+        PropertyDescriptor[] pds = src.getPropertyDescriptors();
+
+        Set<String> emptyNames = new HashSet<>();
+        for (PropertyDescriptor pd : pds) {
+            Object srcValue = src.getPropertyValue(pd.getName());
+            if (srcValue == null) emptyNames.add(pd.getName());
+        }
+
+        for (String ignoreProperty : ignoreProperties) {
+            emptyNames.add(ignoreProperty);
+        }
+
+        return emptyNames.toArray(new String[0]);
     }
 }
