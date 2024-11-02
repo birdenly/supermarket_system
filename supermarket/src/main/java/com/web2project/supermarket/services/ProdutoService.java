@@ -23,6 +23,11 @@ public class ProdutoService {
 
     public ProdutoEntity findById(Long id){
         Optional<ProdutoEntity> obj = repository.findById(id);
+
+        if (!obj.get().isAtivo()) {
+            throw new RuntimeException("Produto inativo");
+        }
+
 		return obj.get();
     }
 
@@ -36,7 +41,31 @@ public class ProdutoService {
 
     public ProdutoEntity update(Long id, ProdutoEntity obj){
         ProdutoEntity entity = repository.getReferenceById(id);
+        
+        if (!entity.isAtivo()) {
+            throw new RuntimeException("Produto inativo");
+        }
+
         BeanUtils.copyProperties(obj, entity, BeanUtilsHelp.getNullPropertyNames(obj));
         return repository.save(entity);
     }
+
+    public ProdutoEntity deleteLogic(Long id) {
+        Optional<ProdutoEntity> produto;
+        if (repository.existsById(id)) {
+            produto = repository.findById(id);
+            produto.get().desativar();
+            repository.save(produto.get());
+
+            return produto.get();
+        } else {
+            throw new RuntimeException("Produto inativo");
+        }
+    }
+
+    public List<ProdutoEntity> findAllAtivo(){
+        return repository.findAllByAtivoTrue();
+    }
+
+    
 }

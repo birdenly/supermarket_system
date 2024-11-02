@@ -34,6 +34,7 @@ public class ProdutoEntity implements Serializable{
     private Instant dataValidade;
     private GeneroProduto genero;
     private String lote;
+    private boolean ativo = true;
 
     public ProdutoEntity(produtoDTO produto) {
         this.nomeProduto = produto.nomeProduto();
@@ -46,6 +47,13 @@ public class ProdutoEntity implements Serializable{
     }
 
     public ProdutoEntity() {
+    }
+
+    public void desativar() {
+        this.ativo = false;
+    }
+    public void ativar() {
+        this.ativo = true;
     }
 
     

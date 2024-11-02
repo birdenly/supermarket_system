@@ -63,5 +63,16 @@ public class ClienteController {
         Cliente = service.update(id, Cliente);
         return ResponseEntity.ok().body(Cliente);
     }
+
+    @PutMapping("deleteLogic/{id}")
+    public ResponseEntity<Object> deleteLogic(@PathVariable Long id) {
+        ClienteEntity produto = service.deleteLogic(id);
+
+        return ResponseEntity.ok().body(produto); 
+    }
     
+    @GetMapping("getAllByAtivo")
+    public ResponseEntity<Object> getAllByAtivo() {
+        return ResponseEntity.ok().body(service.findAllAtivo());
+    }
 }

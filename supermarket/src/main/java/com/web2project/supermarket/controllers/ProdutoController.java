@@ -33,7 +33,7 @@ public class ProdutoController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ProdutoEntity> findById(@PathVariable Long id){
+    public ResponseEntity<Object> findById(@PathVariable Long id){
         ProdutoEntity obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
@@ -55,12 +55,24 @@ public class ProdutoController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProdutoEntity> update(@PathVariable Long id, @RequestBody produtoDTO obj){
+    public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody produtoDTO obj){
 
         ProdutoEntity produto = new ProdutoEntity(obj);
 
         produto = service.update(id, produto);
+
         return ResponseEntity.ok().body(produto);
     }
+
+    @PutMapping("deleteLogic/{id}")
+    public ResponseEntity<Object> deleteLogic(@PathVariable Long id) {
+        ProdutoEntity produto = service.deleteLogic(id);
+
+        return ResponseEntity.ok().body(produto); 
+    }
     
+    @GetMapping("getAllByAtivo")
+    public ResponseEntity<Object> getAllByAtivo() {
+        return ResponseEntity.ok().body(service.findAllAtivo());
+    }
 }

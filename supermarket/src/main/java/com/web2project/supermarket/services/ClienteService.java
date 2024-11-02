@@ -23,6 +23,11 @@ public class ClienteService {
 
     public ClienteEntity findById(Long id){
         Optional<ClienteEntity> obj = repository.findById(id);
+        
+        if (!obj.get().isAtivo()) {
+            throw new RuntimeException("Produto inativo");
+        }
+        
 		return obj.get();
     }
 
@@ -36,7 +41,29 @@ public class ClienteService {
 
     public ClienteEntity update(Long id, ClienteEntity obj){
         ClienteEntity entity = repository.getReferenceById(id);
+
+        if (!entity.isAtivo()) {
+            throw new RuntimeException("Cliente inativo");
+        }
+
         BeanUtils.copyProperties(obj, entity, BeanUtilsHelp.getNullPropertyNames(obj));
         return repository.save(entity);
+    }
+
+    public ClienteEntity deleteLogic(Long id) {
+        Optional<ClienteEntity> cliente;
+        if (repository.existsById(id)) {
+            cliente = repository.findById(id);
+            cliente.get().desativar();
+            repository.save(cliente.get());
+
+            return cliente.get();
+        } else {
+            throw new RuntimeException("Cliente inativo");
+        }
+    }
+
+    public List<ClienteEntity> findAllAtivo(){
+        return repository.findAllByAtivoTrue();
     }
 }

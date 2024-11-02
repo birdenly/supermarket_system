@@ -32,6 +32,7 @@ public class ClienteEntity implements Serializable{
     private String cpf;
     private GeneroPessoa genero;
     private Instant dataNascimento;
+    private boolean ativo = true;
 
     public ClienteEntity(clienteDTO cliente) {
         this.nome = cliente.nome();
@@ -42,6 +43,13 @@ public class ClienteEntity implements Serializable{
     }
 
     public ClienteEntity() {
+    }
+
+    public void desativar() {
+        ativo = false;
+    }
+    public void ativar() {
+        ativo = true;
     }
 
 }
