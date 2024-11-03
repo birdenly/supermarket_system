@@ -25,7 +25,7 @@ public class ClienteService {
         Optional<ClienteEntity> obj = repository.findById(id);
         
         if (!obj.get().isAtivo()) {
-            throw new RuntimeException("Produto inativo");
+            throw new RuntimeException("Cliente inativo");
         }
         
 		return obj.get();
